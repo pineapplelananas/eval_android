@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/exploitation"
+        android:layout_width="118dp"
+        android:layout_height="54dp"
+        android:gravity="center"
+        android:text="@+id/exploitation"
+        android:textSize="40px" />
+
+    <TextView
+        android:id="@+id/appelation"
+        android:layout_width="90dp"
+        android:layout_height="54dp"
+        android:gravity="center"
+        android:textSize="40px" />
+
+    <TextView
+        android:id="@+id/millesime"
+        android:layout_width="49dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textSize="40px" />
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textSize="40px" />
+
+    <TextView
+        android:id="@+id/stock_out"
+        android:layout_width="32dp"
+        android:layout_height="53dp"
+        android:gravity="center"
+        android:textSize="40px" />
+
+    <TextView
+        android:id="@+id/stock_in"
+        android:layout_width="30dp"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:textSize="40px" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="34dp"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:textSize="40px" />
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="40dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:textSize="40px"/>
+</LinearLayout>
