@@ -21,6 +21,7 @@ public class DegustCustomActivity extends AppCompatActivity {
     ArrayList<Degust> degustList;
     Degust custom_degust;
     Degust item;
+    Bottle bottle;
     MAbaseOpenHelper bdd;
     String id_c;
     @Override
@@ -66,17 +67,26 @@ public class DegustCustomActivity extends AppCompatActivity {
         degustList = new ArrayList<>();
         Cursor data = bdd.getAllDegust();
         int numRows = data.getCount();
+        boolean good_degust = false;
         if (numRows == 0) {
             Toast.makeText(DegustCustomActivity.this, "The Database is empty  :(.", Toast.LENGTH_LONG).show();
         } else {
             int i = 0;
             while (data.moveToNext()) {
                 custom_degust = new Degust(data.getString(0), data.getString(1), data.getString(2), data.getString(3), data.getString(4));
-                String id_b = custom_degust.getId();
                 String value = getIntent().getStringExtra("id");
-                int id_int = Integer.parseInt(id_b);
                 int value_int = Integer.parseInt(value);
-                if(id_int==value_int) {
+                Cursor data_a = bdd.getAllBottle();
+                while (data_a.moveToNext()) {
+                    bottle = new Bottle(data_a.getString(0),data_a.getString(1), data_a.getString(2), data_a.getString(3), data_a.getString(4), data_a.getString(5), data_a.getString(6), data_a.getString(7), data_a.getString(8));
+                    String id_bottle = custom_degust.getId();
+                    int id_b_int = Integer.parseInt(id_bottle);
+                    if(id_b_int==value_int){
+                        good_degust = true;
+                        break;
+                    }
+                }
+                if(good_degust) {
                     degustList.add(i, custom_degust);
                     i++;
                 }
