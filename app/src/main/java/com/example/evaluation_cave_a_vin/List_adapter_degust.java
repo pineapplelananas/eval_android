@@ -1,4 +1,4 @@
-package com.example.evaluation_cave_a_cin;
+package com.example.evaluation_cave_a_vin;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,8 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
-import javax.crypto.spec.DESedeKeySpec;
 
 public class List_adapter_degust extends ArrayAdapter<Degust> {
 

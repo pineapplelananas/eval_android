@@ -1,4 +1,4 @@
-package com.example.evaluation_cave_a_cin;
+package com.example.evaluation_cave_a_vin;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.evaluation_cave_a_cin", appContext.getPackageName());
+        assertEquals("com.example.evaluation_cave_a_vin", appContext.getPackageName());
     }
 }

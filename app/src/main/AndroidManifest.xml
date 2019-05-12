@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.evaluation_cave_a_cin">
+    package="com.example.evaluation_cave_a_vin">
 
     <application
         android:allowBackup="true"

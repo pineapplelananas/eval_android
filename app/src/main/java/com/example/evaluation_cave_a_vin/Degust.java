@@ -1,4 +1,4 @@
-package com.example.evaluation_cave_a_cin;
+package com.example.evaluation_cave_a_vin;
 
 public class Degust {
     private String id;

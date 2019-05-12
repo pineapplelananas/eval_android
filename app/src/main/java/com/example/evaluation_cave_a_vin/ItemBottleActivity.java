@@ -1,4 +1,4 @@
-package com.example.evaluation_cave_a_cin;
+package com.example.evaluation_cave_a_vin;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -76,15 +75,18 @@ public class ItemBottleActivity extends AppCompatActivity {
         }
 
     }
-    public void dbStock(int current_stock_int, int add_stock_int, String col){
+    public void dbStock(int insert_value, String col){
         // db opreation
-        int c_stock = current_stock_int + add_stock_int;
+        String stock_current = getIntent().getStringExtra(col);
+        int stock_current_int = Integer.parseInt(stock_current);
+        int c_stock = insert_value + stock_current_int;
         String c_stock_string = String.valueOf(c_stock);
         String id = "_id="+getIntent().getStringExtra("id");
         bdd = new MAbaseOpenHelper(this);
         SQLiteDatabase db =  bdd.openHelper.getWritableDatabase();
         ContentValues newValues = new ContentValues();
         newValues.put(col, c_stock_string );
+
         db.update(table, newValues, id, null);
     }
 
@@ -98,7 +100,7 @@ public class ItemBottleActivity extends AppCompatActivity {
         int result = current_stock_int + add_stock_int;
         String result_string = String.valueOf(result);
         stock.setText(result_string);
-        dbStock(current_stock_int,add_stock_int, "stock_in");
+        dbStock(add_stock_int, "stock_in");
 
     }
 
@@ -112,7 +114,8 @@ public class ItemBottleActivity extends AppCompatActivity {
         int result = current_stock_int - minus_stock_int;
         String result_string = String.valueOf(result);
         stock.setText(result_string);
-        dbStock(current_stock_int,minus_stock_int, "stock_out");
+
+        dbStock(minus_stock_int, "stock_out");
 
     }
     public void newDegust(View v){

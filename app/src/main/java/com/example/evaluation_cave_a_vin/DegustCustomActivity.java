@@ -1,46 +1,37 @@
-package com.example.evaluation_cave_a_cin;
+package com.example.evaluation_cave_a_vin;
 
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
-public class DegustActivity extends AppCompatActivity {
+public class DegustCustomActivity extends AppCompatActivity {
 
-    private String TAG = DegustActivity.class.getSimpleName();
+    private String TAG = DegustCustomActivity.class.getSimpleName();
     private ListView lv;
     ArrayList<Degust> degustList;
-    Degust degust;
+    Degust custom_degust;
     Degust item;
+    Bottle bottle;
     MAbaseOpenHelper bdd;
-
+    String id_c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_degust);
-
+        setContentView(R.layout.activity_custom_degust);
+        id_c = getIntent().getStringExtra("id");
         bdd = new MAbaseOpenHelper(this);
-        lv = (ListView) findViewById(R.id.listdegust);
-        viewDegust();
+        lv = (ListView) findViewById(R.id.listdegust_c);
+        openCustomDegust();
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -50,7 +41,7 @@ public class DegustActivity extends AppCompatActivity {
                 System.out.println(numRows);
 
                 if (numRows == 0) {
-                    Toast.makeText(DegustActivity.this, "The Database is empty  :(.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(DegustCustomActivity.this, "The Database is empty  :(.", Toast.LENGTH_LONG).show();
                 } else {
                     data.moveToPosition(position);
                     item = new Degust(data.getString(0),data.getString(1), data.getString(2), data.getString(3), data.getString(4));
@@ -60,7 +51,7 @@ public class DegustActivity extends AppCompatActivity {
                     String note = item.getNote();
                     String comment = item.getComment();
 
-                    Intent intent = new Intent(DegustActivity.this, ItemDegustActivity.class);
+                    Intent intent = new Intent(DegustCustomActivity.this, ItemDegustActivity.class);
 
                     intent.putExtra("exploitation", exploitation);
                     intent.putExtra("date_degust", date_d);
@@ -72,31 +63,44 @@ public class DegustActivity extends AppCompatActivity {
         });
     }
 
-    public void viewDegust() {
+    public void openCustomDegust(){
         degustList = new ArrayList<>();
         Cursor data = bdd.getAllDegust();
-
         int numRows = data.getCount();
+        boolean good_degust = false;
         if (numRows == 0) {
-            Toast.makeText(DegustActivity.this, "The Database is empty  :(.", Toast.LENGTH_LONG).show();
+            Toast.makeText(DegustCustomActivity.this, "The Database is empty  :(.", Toast.LENGTH_LONG).show();
         } else {
             int i = 0;
             while (data.moveToNext()) {
-                System.out.println(data.getString(1) + " " + data.getString(2) + " " + data.getString(3)+ " " + data.getString(4));
-                degust = new Degust(data.getString(0),data.getString(1), data.getString(2), data.getString(3), data.getString(4));
-                degustList.add(i, degust);
-                i++;
+                custom_degust = new Degust(data.getString(0), data.getString(1), data.getString(2), data.getString(3), data.getString(4));
+                String value = getIntent().getStringExtra("id");
+                int value_int = Integer.parseInt(value);
+                Cursor data_a = bdd.getAllBottle();
+                while (data_a.moveToNext()) {
+                    bottle = new Bottle(data_a.getString(0),data_a.getString(1), data_a.getString(2), data_a.getString(3), data_a.getString(4), data_a.getString(5), data_a.getString(6), data_a.getString(7), data_a.getString(8));
+                    String id_bottle = custom_degust.getId();
+                    int id_b_int = Integer.parseInt(id_bottle);
+                    if(id_b_int==value_int){
+                        good_degust = true;
+                        break;
+                    }
+                }
+                if(good_degust) {
+                    degustList.add(i, custom_degust);
+                    i++;
+                }
             }
             List_adapter_degust adapter = new List_adapter_degust(this, R.layout.degustlist, degustList);
-            lv = (ListView) findViewById(R.id.listdegust);
+            lv = (ListView) findViewById(R.id.listdegust_c);
             lv.setAdapter(adapter);
         }
 
     }
 
     public void openDegust(View v){
-        Intent myIntent = new Intent(DegustActivity.this, MakeDegustActivity.class);
-        DegustActivity.this.startActivity(myIntent);
+        Intent myIntent = new Intent(DegustCustomActivity.this, MakeDegustActivity.class);
+        DegustCustomActivity.this.startActivity(myIntent);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -125,7 +129,7 @@ public class DegustActivity extends AppCompatActivity {
         }
         if (id == R.id.degusts
         ) {
-            startActivityForResult(new Intent(this, DegustActivity.class),
+            startActivityForResult(new Intent(this, DegustCustomActivity.class),
                     1
             );
         }
